@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class JpaNoticeService {
-    // Jpas는 JpaRepository 인터페이스를 통해 Entity를 제어한다. 또한 Entity가 제어되면
-    // 자동으로 CRUD가 수행 따라서 개발자가 SQL문을 볼 일이 없다.
+    // Jpa는 JpaRepository 인터페이스를 통해 Entity를 제어한다. 또한 Entity가 제어되면
+    // 자동으로 CRUD가 수행. 따라서 개발자가 SQL문을 볼 일이 없다.
     private final NoticeRepository noticeRepository;
     /* 아래의 생성자는 Lombok의 @RequiredArgsContructor로 대체
     public JpaNoticeService(NoticeRepository noticeRepository){
