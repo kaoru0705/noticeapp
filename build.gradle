@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.10-SNAPSHOT'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.ch'
+version = '0.0.1-SNAPSHOT'
+description = 'noticeapp'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    //우리가 사용하고자 하는 데이터베이스 드라이버
+    //Source: https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation("mysql:mysql-connector-java:8.0.31")
+
+    //mybatis -spring 라이브러리 추가 (참고-별도의 mybatis가 필요없다)
+    //스프링이 지원하는 데이터베이스 연동 의존성 추가
+    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5")
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

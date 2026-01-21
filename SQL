@@ -1,0 +1,20 @@
+
+새로운 프로젝트에 사용할 데이터베이스 생성
+1) mysqld 로 가동을 먼저 하고
+2) mysql을 root로 접속
+    create  database  kiosk;
+3) use kiosk; 로 db선택하기
+4) 유저만들기
+    create  user  'boot'@'%' identified by '1234';
+    grant all privileges  on kiosk.*  to  'boot'@'%' with grant option;
+    flush privileges;
+5) mysql -u  boot -p 접속하기
+6) use kiosk;
+7) 공지게시판 테이블 생성
+    create  table  notice(
+        notice_id  bigint  primary key auto_increment ,
+        title varchar(100),
+        writer varchar(20),
+        content text,
+        regdate  datetime  default  current_timestamp
+    ) default character set utf8mb4;

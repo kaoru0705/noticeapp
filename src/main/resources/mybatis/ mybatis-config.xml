@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 데이터베이스의 테이블의 컬럼명 관례상 언더바를 자주 씀
+             ex)  notice_id
+             그런데 자바클래스의 멤버변수에서는 언더바 보다는 낙타기법을 많이 사용함
+             ex)  class Dog{
+                        String dog_name (X)
+                        String dogName(O) 더 선호 , 전통적인 관례상의 낙타기법때문에..
+             }
+             문제발생) Mybatis와 같은 SQL Mapper는 컬럼명과 필드명이 동일해야만 자동 매핑을 진행한다
+             mapUnderscoreToCamelCase :컬럼명의 언더바가 있어도, java 필드와 매핑을 자동화 시켜줌
+         -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <!-- typealias    -->
+    <typeAliases>
+        <package name="com.ch.noticeapp.notice.dto.mybatis"/>
+    </typeAliases>
+
+</configuration>
