@@ -38,7 +38,11 @@ public class MybatisNoticeController {
         Notice created=noticeService.regist(notice);
 
         //created() 메서드 안에는  클라이언트에게 등록된 자원의 위치를 알려주는 코드를 작성할 수 있음
+        // 왜 쓰지? 상태 코드 201 반환(요청대로 새로운 자원이 성공적으로 생성되었다는 뜻) ok는 상태코드 200
+        // URI.create("/api/notices/" + created.getNoticeId()) 이 부분은 Location 이라는 항목에 주소를 담아 보낸다.
+        // window.location.href = res.headers.get("Location") 따라서 받은 쪽에서 이게 가능
         //return ResponseEntity.created(URI.create("/api/notices/"+notice.getNoticeId())).body(notice);
+
         return ResponseEntity.created(URI.create("/api/notices/"+created.getNoticeId())).body(created);
     }
 
@@ -48,8 +52,9 @@ public class MybatisNoticeController {
     public ResponseEntity<Void> delete( @PathVariable Long noticeId){
         log.debug("삭제할 글의 pk는 {}",  noticeId);
         noticeService.delete(noticeId);
-        // noContent() 204 상태 코드
 
+        // noContent() 204 상태 코드
+        // 204 No Content를 쓸 경우: "성공했어! 근데 지웠으니까 줄 데이터는 없어. 본문은 비어있으니 찾지 마!"
         return ResponseEntity.noContent().build();
     }
 
