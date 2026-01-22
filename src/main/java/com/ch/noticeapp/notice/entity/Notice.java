@@ -52,7 +52,7 @@ public class Notice {
     private LocalDateTime regdate;
 
     @Column(name="hit")
-    private Integer hit;
+    private int hit;
 
     // 개발자가 추후 데이터 1건을 담기 위해 사용될 생성자 정의
     public Notice(String title, String writer, String content){
@@ -68,7 +68,6 @@ public class Notice {
     }
 
     public void increaseHit(){
-        if(this.hit == null) this.hit = 0;
         hit += 1;
     }
 

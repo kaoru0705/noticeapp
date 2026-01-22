@@ -5,10 +5,9 @@ import com.ch.noticeapp.notice.dto.response.ResponseNotice;
 import com.ch.noticeapp.notice.service.JpaNoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController     // 모든 요청 처리 메서드에 @Responsebody 를 붙일 필요가 없다.
 @RequestMapping("/api/notices")
@@ -26,5 +25,27 @@ public class JpaNoticeController {
         return ResponseEntity.ok(created);
     }
 
+    // 목록 요청 처리
+    @GetMapping
+    public ResponseEntity<List<ResponseNotice>> getList(){
 
+        return ResponseEntity.ok(jpaNoticeService.getList());
+    }
+
+    // 수정 요청 처리
+    @PutMapping("/{noticeId}")
+    public ResponseEntity<ResponseNotice> update(@PathVariable Long noticeId, @RequestBody RequestNotice request){
+
+        return ResponseEntity.ok(jpaNoticeService.update(noticeId, request));
+    }
+
+    // 삭제 요청 처리
+    @DeleteMapping("/{noticeId}")
+    // ResponseBody로 JSON으로 바꿀 때 아무 것도 없는 것도 객체로 보내야 한다.
+    public ResponseEntity<Void>  delete(@PathVariable Long noticeId) {
+
+        jpaNoticeService.delete(noticeId);
+
+        return ResponseEntity.noContent().build();  // 204 noContent()
+    }
 }
