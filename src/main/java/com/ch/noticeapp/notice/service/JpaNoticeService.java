@@ -70,6 +70,7 @@ public class JpaNoticeService {
         // findAll()로 가져온 결과를 우리가 원하는 형태인 List<ResponseNotice>로 변환 작업을 해야 함...
         // 전통적인 방법으로는 for()문 돌려서 요소를 List에 add()..  js(배열메서드) : java(Stream)
         // Notice entity에 있는 noticeId를 사용해야 한다. db 칼럼명인 notice_id는 안 됨
+        // List<Notice> notices = noticeRepository.findAll(); 이건 미친 짓이다.
         return noticeRepository.findAll(Sort.by(Sort.Direction.DESC, "noticeId"))       // 모든 레코드 가져오기
                 .stream()       // 이 시점부터 컬렉션을 선언적 방식으로 처리할 수 있는 스트림을 시작함
                 .map(ResponseNotice :: from).toList();
