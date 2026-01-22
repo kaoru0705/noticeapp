@@ -43,11 +43,14 @@ public class JpaNoticeService {
             notice를 영속성(Persistence) 컨텍스트 관리 대상으로 등록한다는 의미(JPA에게 맡김)
             INSERT 발생하는 시점은 현재 메서드가 완료되면서 트랜잭션이 확정될 때이다.
             따라서 등록 뿐만 아니라 JPA는 모든 메소드에 @Transactional 필수
-            허나 @PersistenceContext를 사용하면?
-         */
-        Notice saved = noticeRepository.save(notice);  // db에 반영 후 저장된 게시물 반환
-        em.refresh(saved);  // flush 발생 -> INSERT 실행 -> SELECT 실행하여 DB값 재로딩
 
+         */
+        // 이 시점에 이미 noticeId가 채워짐
+        // 엥 메서드가 완료되면서 일어나는 거 아닌가? Notice Entity의 @GeneratedValue에 의해 ID를 알기 위해 INSERT SQL을 즉시 실행해야 함
+        Notice saved = noticeRepository.save(notice);  // db에 반영 후 저장된 게시물 반환
+        //System.out.println("saved regdate = " + saved.getRegdate());
+        em.refresh(saved);  // flush 발생 -> INSERT 실행 -> SELECT 실행하여 DB값 재로딩
+        //System.out.println("saved regdate after refresh = " + saved.getRegdate());
         // 주의할 점!!! 절대로 응답에 사용될 객체로 Notice Entity를 사용해서는 안 된다.. 왜??
         // 데이터베이스와 관련된 정보, 객체간의 관계(erd 상 관계... 등등)
         // 따라서, Entity 안에 들어있는 데이터 중 필요한 것만 꺼내서 담을 만한 그릇 DTO가 필요함
